@@ -154,6 +154,7 @@ public final class NumberUtil {
 
 
     public static boolean isNumber(String number){
+
         if( number instanceof String){
             return number.matches("[0-9\\.\\-E]+");
         } else {

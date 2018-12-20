@@ -1,30 +1,38 @@
-	package com.myallutilities.utilities.utilities;
+package com.myallutilities.utilities.utilities;
 
-    import com.pmti.tradestats.constant.Pattern;
 
-    import java.text.ParseException;
-    import java.text.SimpleDateFormat;
 
-//import java.util.regex.Pattern;
+import com.myallutilities.utilities.constant.Pattern;
 
-    public final class ValidatorUtil {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.function.Predicate;
 
-        private ValidatorUtil() {}
+public final class ValidatorUtils {
 
-        public static boolean isEmptyOrNull(final String text) {
+private ValidatorUtils() {}
 
-            if( text == null ) {
-                return true;
-            }
-            if( text.isEmpty() ) {
-                return true;
-            }
-            return false;
+    public static boolean isEmptyOrNull(final String text) {
+        if( text == null ) {
+            return true;
+         }
+         if( text.isEmpty() ) {
+             return true;
+         }
+         return false;
+    }
+
+    public static boolean isEmpty(final Object text) {
+        String strText = (String)text;
+        if( strText.isEmpty() ) {
+            return true;
         }
+        return false;
+    }
 
-        public static boolean isNull(Object object) {
-            return (object == null) ? true : false;
-        }
+    public static boolean isNull(Object object) {
+         return (object == null) ? true : false;
+    }
 
         public static boolean isValidDate(String dateToValidate, String dateFormat){
             if(dateToValidate == null){
@@ -46,23 +54,10 @@
                 return false;
             }
         }
-        public static boolean min(String text, int minimum) {
-            int textLength = text.length();
-            if( minimum > textLength ) {
-                return false;
-            }
-            return true;
-        }
-        public static boolean max(String text, int maximum) {
-            int textLength = text.length();
-            if( textLength > maximum) {
-                return false;
-            }
-            return true;
-        }
+
         public static boolean isPhone(String phone) {
 
-            if( !ValidatorUtil.isEmptyOrNull(phone) ) {
+            if( !ValidatorUtils.isEmptyOrNull(phone) ) {
                 return false;
             }
             if( !phone.matches( Pattern.PHONE ) ) {
@@ -72,7 +67,7 @@
         }
         public static boolean isMobile(String mobile) {
 
-            if( !ValidatorUtil.isEmptyOrNull(mobile) ) {
+            if( !ValidatorUtils.isEmptyOrNull(mobile) ) {
                 return false;
             }
 
@@ -83,7 +78,7 @@
             return true;
         }
         public static boolean isMail(String mail) {
-            if( !ValidatorUtil.isEmptyOrNull(mail) ) {
+            if( !ValidatorUtils.isEmptyOrNull(mail) ) {
                 return false;
             }
             if( !mail.matches( Pattern.MAIL ) ) {
@@ -92,4 +87,8 @@
 
             return true;
         }
+
+
+
+
     }

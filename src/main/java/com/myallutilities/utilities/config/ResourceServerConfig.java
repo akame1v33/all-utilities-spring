@@ -1,22 +1,22 @@
-package com.myallutilities.utilities.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-
-@EnableResourceServer
-@Configuration
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+//package com.myallutilities.utilities.config;
 //
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/api/user").permitAll()
-                .anyRequest()
-                .authenticated();
-//        super.configure(http);
-    }
-}
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.http.HttpMethod;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+//import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+//
+//@EnableResourceServer
+//@Configuration
+//public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+//
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+////
+//        http.authorizeRequests()
+//                .antMatchers(HttpMethod.POST,"/api/user").permitAll()
+//                .anyRequest()
+//                .authenticated();
+////        super.configure(http);
+//    }
+//}
