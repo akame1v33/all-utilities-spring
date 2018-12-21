@@ -22,7 +22,65 @@ public final class Validator<T> {
             return new Validator<>(key, value);
     }
 
+//    public Validator<T> ifNull(){
+//        if(  isValueNull()){
+//            validatorPayloads.add(new ValidatorPayload("VALUE MUST NOT BE NULL", key));
+//        }
+//        return this;
+//    }
+
+//   @NO PARAM
+    public Validator<T> ifNull(){
+        if(  isValueNull()){
+            validatorPayloads.add(new ValidatorPayload("VALUE MUST NOT BE NULL", key));
+        }
+        return this;
+    }
+    public Validator<T> ifEmpty(){
+        if( !isValueNull() ) {
+            if (ValidatorUtils.isEmpty(value)) {
+                validatorPayloads.add(new ValidatorPayload("VALUE MUST NOT BE EMPTY", key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifNullOrEmpty(){
+        if( !isValueNull() ) {
+            if (ValidatorUtils.isEmpty(value)) {
+                validatorPayloads.add(new ValidatorPayload("VALUE MUST NOT BE EMPTY OR NULL", key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifNotEqualWith(String anotherValue){
+        if( !isValueNull() ){
+            if( !String.valueOf(value).equalsIgnoreCase(anotherValue) ){
+                validatorPayloads.add(new ValidatorPayload("VALUE 1 AND VALUE 2 ARE NOT EQUAL", key));
+            }
+        }
+
+        return this;
+    }
+
 //  @STRING
+    public Validator<T> ifNotEqualWith(String anotherValue, String message){
+        if( !isValueNull() ){
+            if( !String.valueOf(value).equalsIgnoreCase(anotherValue) ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+
+        return this;
+    }
+    public Validator<T> ifNotPhone(String message){
+        if( !isValueNull() ){
+            if( !ValidatorUtils.isPhone(String.valueOf(value)) ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+
+        return this;
+    }
     public Validator<T> ifNotMobile(String message){
         if( !isValueNull() ){
             if( !ValidatorUtils.isMobile(String.valueOf(value)) ){
@@ -32,9 +90,27 @@ public final class Validator<T> {
         
         return this;
     }
+    public Validator<T> ifNotMail(String message){
+        if( !isValueNull() ){
+            if( !ValidatorUtils.isMail(String.valueOf(value))  ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+
+        return this;
+    }
     public Validator<T> ifNotMobile(String regexPattern, String message){
         if( !isValueNull() ){
             if( !String.valueOf(value).matches(regexPattern)    ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+
+        return this;
+    }
+    public Validator<T> ifNotMail(String regexPattern, String message){
+        if( !isValueNull() ){
+            if( !String.valueOf(value).matches(regexPattern)  ){
                 validatorPayloads.add(new ValidatorPayload(message, key));
             }
         }
@@ -56,6 +132,8 @@ public final class Validator<T> {
         return this;
     }
 
+
+
     public Validator<T> ifEmpty(String message){
         if( !isValueNull() ) {
             if (ValidatorUtils.isEmpty(value)) {
@@ -65,7 +143,7 @@ public final class Validator<T> {
         return this;
     }
 
-    public Validator<T> isNullOrEmpty(String message){
+    public Validator<T> ifNullOrEmpty(String message){
         if( !isValueNull() ) {
             if (ValidatorUtils.isEmpty(value)) {
                 validatorPayloads.add(new ValidatorPayload(message, key));
@@ -152,6 +230,33 @@ public final class Validator<T> {
 
 
     //@ SUPPLIER
+    public Validator<T> ifNotPhone(Supplier<String> supplier){
+        if( !isValueNull() ){
+            if( !ValidatorUtils.isPhone(String.valueOf(value)) ){
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+
+        return this;
+    }
+    public Validator<T> ifNotMobile(Supplier<String> supplier){
+        if( !isValueNull() ){
+            if( !ValidatorUtils.isMobile(String.valueOf(value)) ){
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+
+        return this;
+    }
+    public Validator<T> ifNotEqual(String anotherValue, Supplier<String> supplier){
+        if( !isValueNull() ){
+            if( !String.valueOf(value).equalsIgnoreCase(anotherValue) ){
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+
+        return this;
+    }
     public Validator<T> ifMaxMin(int max, int min, Supplier<String> supplier){
         if( !this.isValueNull() ){
             String strValue = (String) key;
@@ -163,7 +268,7 @@ public final class Validator<T> {
     }
 
 
-    public Validator<T> isNullOrEmpty(Supplier<String> supplier){
+    public Validator<T> ifNullOrEmpty(Supplier<String> supplier){
         if( !isValueNull() ) {
             if (ValidatorUtils.isEmpty(value)) {
                 validatorPayloads.add(new ValidatorPayload(supplier.get(), key));

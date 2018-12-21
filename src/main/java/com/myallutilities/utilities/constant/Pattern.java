@@ -11,7 +11,7 @@ public interface Pattern {
 	String ALPHA					= "^[A-Z\\s]+$";
 	String ALPHANUMERIC 			= "^[A-Z0-9\\s\\.\\-]+$";
 	String NUMERIC					= "\\d+";
-	String MAIL 					= "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+	String MAIL 					= "^[a-zA-Z0-9\\.\\_\\%\\+\\-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 	String PHONE 					= "^\\(\\d{2,3}\\)\\d{3}-\\d{4}$";
 	
 	
