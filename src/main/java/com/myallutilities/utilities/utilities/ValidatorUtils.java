@@ -30,9 +30,32 @@ private ValidatorUtils() {}
         return false;
     }
 
+    public static boolean isMobile(String mobile) {
+        if( !mobile.matches( Pattern.MOBILE ) ) {
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isNull(Object object) {
          return (object == null) ? true : false;
     }
+
+    public static boolean isPhone(String phone) {
+
+        if( !phone.matches( Pattern.PHONE ) ) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean isMail(String mail) {
+        if( !mail.matches( Pattern.MAIL ) ) {
+            return false;
+        }
+
+        return true;
+    }
+
 
         public static boolean isValidDate(String dateToValidate, String dateFormat){
             if(dateToValidate == null){
@@ -55,38 +78,9 @@ private ValidatorUtils() {}
             }
         }
 
-        public static boolean isPhone(String phone) {
 
-            if( !ValidatorUtils.isEmptyOrNull(phone) ) {
-                return false;
-            }
-            if( !phone.matches( Pattern.PHONE ) ) {
-                return false;
-            }
-            return true;
-        }
-        public static boolean isMobile(String mobile) {
 
-            if( !ValidatorUtils.isEmptyOrNull(mobile) ) {
-                return false;
-            }
 
-            if( !mobile.matches( Pattern.MOBILE ) ) {
-                return false;
-            }
-
-            return true;
-        }
-        public static boolean isMail(String mail) {
-            if( !ValidatorUtils.isEmptyOrNull(mail) ) {
-                return false;
-            }
-            if( !mail.matches( Pattern.MAIL ) ) {
-                return false;
-            }
-
-            return true;
-        }
 
 
 

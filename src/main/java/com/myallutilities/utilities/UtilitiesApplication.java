@@ -19,67 +19,21 @@ public class UtilitiesApplication implements CommandLineRunner {
 		String lastName = "";
 		String firstName = null;
 
-//		Set<String> x = n
-
 		String name = "Heheh";
+		String mobile = null;
 
 
-		Validator
-				.reject("NAME","RIMURU TEMPEST")
-				.ifPattern("^[a-zA-Z\\s]+$","NAME MUST NOT HAVE CONTAINS SPECIAL CHARACTERS")
-				.ifMinLength(2, "MUST HAVE ATLEAST 2 ALPA CHARACTERS")
-				.ifMaxLength(100, "TAE")
-				.ifNull("SHOULD NOT BE NULL")
-				.ifEmpty("SHOULD NOT BE EMPTY")
-				.andReject("NAME",null)
-				.ifPattern("^[a-zA-Z\\s]+$","NAME MUST NOT HAVE CONTAINS SPECIAL CHARACTERS")
-				.ifMinLength(2, "MUST HAVE ATLEAST 2 ALPA CHARACTERS")
-				.ifMaxLength(100, "TAE")
-				.ifNull("SHOULD NOT BE NULL")
-				.ifEmpty("SHOULD NOT BE EMPTY")
-				.validate(x -> {
-					System.out.println(x);
-				});
+		Validator.reject("mobile", mobile)
+				.ifEmpty("mobile must not be empty")
+				.ifNull(() -> "mobile is required")
+				.ifNotMobile("Mobile format should be 11 digits numbers")
+				.validate().isPresent();
 
-//		Validator.of(test)
-//				.
-//		Validator.<List<? extends CharSequence>>of(() -> Arrays.asList("a","b","c"));
-//		Validator.<String>reject(() -> test);
-
-//		Some.<List<? extends CharSequence>>of(() -> Arrays.asList("a","b","c"))
-//				.peek(System.out::println);
-//		Some.<List<? extends CharSequence>>of(() -> Arrays.asList("a","b","c"))
-//				.test(x -> {
-//					x.
-//				})
-//
-////		some.peek(x -> {{
-////
-////		}});
-//
-//		System.out.println(some.get());
-
-//		String s = IntStream.range(1,2)
-//				.mapToObj(x -> "#")
-//				.collect(Collectors.joining());
-//
-//		System.out.println(s);
-
-
-
-		int x = 5;
-//		Validator.rejectIf("name")
-//				.empty(x -> x.)
-
-//		Stream.of(x)
-//				.fil
-//				.filter(x -> x.length() == 0);
-//		Stream.of(name)
-//				.it
-//
-//		Validator
-//				.rejectIf(name)
-//				.
+		Validator.reject("lastName", lastName)
+				.ifNull(() -> "NULL VALUE NOT ALLOWED")
+				.ifEmpty(() -> "EMPTY VALUE NOT ALLOWED")
+				.test( (value) -> true, () -> "CUSTOMIZE SHITS")
+				.validate();
 
 
 

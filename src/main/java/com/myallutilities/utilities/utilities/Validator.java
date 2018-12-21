@@ -21,22 +21,43 @@ public final class Validator<T> {
     public static <T> Validator<T> reject(final String key, final T value){
             return new Validator<>(key, value);
     }
-    public Validator<T> andReject(final String key, final T value){
-        this.value = value;
-        this.key = key;
+
+//  @STRING
+    public Validator<T> ifNotMobile(String message){
+        if( !isValueNull() ){
+            if( !ValidatorUtils.isMobile(String.valueOf(value)) ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+        
+        return this;
+    }
+    public Validator<T> ifNotMobile(String regexPattern, String message){
+        if( !isValueNull() ){
+            if( !String.valueOf(value).matches(regexPattern)    ){
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+
+        return this;
+    }
+    
+    public Validator<T> test(Predicate<T> predicate, String message){
+        if( predicate.test(value) ){
+            validatorPayloads.add(new ValidatorPayload(message, key));
+        }
         return this;
     }
 
-    public Validator<T> ifNull(String message){
-        if(  ValidatorUtils.isNull(value) ){
+    public Validator<T> ifNull(String message ){
+        if(  isValueNull()){
             validatorPayloads.add(new ValidatorPayload(message, key));
         }
         return this;
     }
 
     public Validator<T> ifEmpty(String message){
-
-        if( !ValidatorUtils.isNull(value) ) {
+        if( !isValueNull() ) {
             if (ValidatorUtils.isEmpty(value)) {
                 validatorPayloads.add(new ValidatorPayload(message, key));
             }
@@ -44,19 +65,38 @@ public final class Validator<T> {
         return this;
     }
 
-    public Validator<T> ifMaxLength(int length, String message){
-        if( !this.isValueNull() ){
-            String strValue = (String) key;
-            if( strValue.length() > length ) {
+    public Validator<T> isNullOrEmpty(String message){
+        if( !isValueNull() ) {
+            if (ValidatorUtils.isEmpty(value)) {
                 validatorPayloads.add(new ValidatorPayload(message, key));
             }
         }
         return this;
     }
-    public Validator<T> ifMinLength(int length, String message){
+
+    public Validator<T> ifMaxMin(int max, int min, String message){
+        if( !this.isValueNull() ){
+            String strValue = (String) key;
+            if( strValue.length() > max || strValue.length() < min) {
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+        return this;
+    }
+
+    public Validator<T> ifMaxLength(int max, String message){
+        if( !this.isValueNull() ){
+            String strValue = (String) key;
+            if( strValue.length() > max ) {
+                validatorPayloads.add(new ValidatorPayload(message, key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifMinLength(int min, String message){
         if( !this.isValueNull() ) {
             String strValue = (String) value;
-            if (strValue.length() < length) {
+            if (strValue.length() < min) {
                 validatorPayloads.add(new ValidatorPayload(message, key));
             }
         }
@@ -92,23 +132,9 @@ public final class Validator<T> {
     }
 
 
-
     private boolean isValueNull(){
         return ValidatorUtils.isNull(this.value);
     }
-
-
-//    public Validator<T> pipe(Predicate<T>... predicates){
-//
-//        Stream.of(predicates)
-//                .forEach(predicate -> {
-//                    if( predicate.test(value) ){
-//                        validatorPayloads.add(new ValidatorPayload(message, key));
-//                    }
-//                });
-//
-//    }
-
 
     public Optional<Set<ValidatorPayload>> validate(){
         if( this.validatorPayloads.size() == 0 ){
@@ -119,23 +145,104 @@ public final class Validator<T> {
     }
 
 
-//    public Validator<T> empty(Predicate<T> test){
-//        test.test(value);
-//        return this;
-//    }
-
     public void validate(final Consumer<Set<ValidatorPayload>> consumer){
         consumer.accept(this.validatorPayloads);
     }
 
-//    public static <T> Validator<T> rejectIf(final Supplier<T> supplier){
-//        return new Validator<>(supplier.get());
-//    }
 
 
-    public static ValidatorPayload payload(String code, String message){
-        return new ValidatorPayload(message, code);
+    //@ SUPPLIER
+    public Validator<T> ifMaxMin(int max, int min, Supplier<String> supplier){
+        if( !this.isValueNull() ){
+            String strValue = (String) key;
+            if( strValue.length() > max || strValue.length() < min) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
     }
+
+
+    public Validator<T> isNullOrEmpty(Supplier<String> supplier){
+        if( !isValueNull() ) {
+            if (ValidatorUtils.isEmpty(value)) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+
+    public Validator<T> ifPattern(String regexPattern, Supplier<String> supplier){
+        if( !this.isValueNull() ) {
+            String strValue = (String) value;
+            if (!strValue.matches(regexPattern)) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+
+    public Validator<T> test(Predicate<T> predicate, Supplier<String> supplier){
+        if( predicate.test(value) ){
+            validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+        }
+        return this;
+    }
+
+    public Validator<T> ifNull(Supplier<String> supplier ){
+        if(  ValidatorUtils.isNull(value) ){
+            validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+        }
+        return this;
+    }
+
+    public Validator<T> ifEmpty(Supplier<String> supplier){
+        if( !isValueNull() ) {
+            if (ValidatorUtils.isEmpty(value)) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+
+    public Validator<T> ifMaxLength(int length, Supplier<String> supplier){
+        if( !this.isValueNull() ){
+            String strValue = (String) key;
+            if( strValue.length() > length ) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifMinLength(int length, Supplier<String> supplier){
+        if( !this.isValueNull() ) {
+            String strValue = (String) value;
+            if (strValue.length() < length) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifMinStripLength(int length, String stripRegexPattern, Supplier<String> supplier){
+        if( !this.isValueNull() ) {
+            String strValue = (String) value;
+            if (strValue.length() < length) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+    public Validator<T> ifMaxStripLength(int length, String stripRegexPattern,  Supplier<String> supplier){
+        if( !this.isValueNull() ){
+            String strValue = (String) key;
+            if( strValue.length() > length ) {
+                validatorPayloads.add(new ValidatorPayload(supplier.get(), key));
+            }
+        }
+        return this;
+    }
+
+
 
     public static class ValidatorPayload {
         private String message;
