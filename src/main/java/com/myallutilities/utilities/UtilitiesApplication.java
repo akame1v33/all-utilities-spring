@@ -30,7 +30,7 @@ public class UtilitiesApplication implements CommandLineRunner {
 		Validator
 				.reject("password",password1)
 				.ifNullOrEmpty()
-				.ifNotEqualWith(password2)
+				.ifNotEqualWith(password2, "NOT EQUAL")
 				.validate(System.out::println);
 
 //		String mail = "akame1v33@@gmail.com";
