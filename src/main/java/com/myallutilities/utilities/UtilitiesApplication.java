@@ -17,21 +17,27 @@ public class UtilitiesApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String lastName = "";
-		String firstName = null;
 
-		String name = "Heheh";
-		String mobile = null;
+		String name = "X";
 
+//		Validator.reject(name, "name")
+//				.
 
-		String password1 = "chick2";
-		String password2 = "chick";
-
-		Validator
-				.reject("password",password1)
-				.ifNullOrEmpty()
-				.ifNotEqualWith(password2, "NOT EQUAL")
-				.validate(System.out::println);
+//		String lastName = "";
+//		String firstName = null;
+//
+//		String name = "Heheh";
+//		String mobile = null;
+//
+//
+//		String password1 = "chick2";
+//		String password2 = "chick";
+//
+//		Validator
+//				.reject("password",password1)
+//				.ifNullOrEmpty()
+//				.ifNotEqualWith(password2, "NOT EQUAL")
+//				.validate(System.out::println);
 
 //		String mail = "akame1v33@@gmail.com";
 //		System.out.println(
