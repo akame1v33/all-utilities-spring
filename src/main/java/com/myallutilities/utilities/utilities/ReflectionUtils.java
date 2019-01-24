@@ -1,7 +1,12 @@
 package com.myallutilities.utilities.utilities;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public final class ReflectionUtils {
 	private ReflectionUtils() {}
@@ -30,4 +35,11 @@ public final class ReflectionUtils {
 		Type superClassType = clazz.getGenericSuperclass();
 		return ((ParameterizedType)superClassType).getActualTypeArguments()[index];
 	}
+
+
+//	public static List<Method> getMethod(Object object) {
+//
+//		Class<?> clazz = object.getClass();
+//		Arrays.stream( clazz.getDeclaredFields() )
+//	}
 }

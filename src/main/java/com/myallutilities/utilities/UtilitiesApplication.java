@@ -1,12 +1,15 @@
 package com.myallutilities.utilities;
 
 import com.myallutilities.utilities.utilities.Validator;
+import com.myallutilities.utilities.utilities.ValidatorTest;
 import com.myallutilities.utilities.utilities.ValidatorUtils;
+import com.myallutilities.utilities.utilities.ValidatorV2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Set;
+import java.util.*;
+import java.util.function.Predicate;
 
 @SpringBootApplication
 public class UtilitiesApplication implements CommandLineRunner {
@@ -15,10 +18,24 @@ public class UtilitiesApplication implements CommandLineRunner {
 		SpringApplication.run(UtilitiesApplication.class, args);
 	}
 
+
+
 	@Override
 	public void run(String... args) throws Exception {
+		Student student = new Student(1000L, "SOME STUDENT");
 
-		String name = "X";
+		Map<String, List<Predicate<String>>> validators = new HashMap<>();
+
+		validators.put("name", Arrays.asList(ValidatorTest.required(), ValidatorTest.required()) );
+
+		ValidatorV2.validate(student, validators);
+
+
+
+
+//		Validator.validate(myClass,
+//				"lastName"
+//				)
 
 //		Validator.reject(name, "name")
 //				.
